@@ -1,0 +1,33 @@
+.calculator {
+    margin:auto;
+    width: 400px;
+    height: 600px;
+    background-color: gray;
+    border-radius: 40px;
+
+}
+
+.display {
+    position:relative;
+    top: 80px;
+    height: 80px;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.grid-container {
+    position: relative;
+    top: 80px;
+    width: 80%;
+    height: 400px;
+    margin-left: 10%;
+    margin-right: 10%;
+    border: 1 solid darkslategrey;
+    padding-top: 20px;
+    display: grid;
+    gap:10px;
+}
+
