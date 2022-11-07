@@ -10,12 +10,24 @@
 .display {
     position:relative;
     top: 80px;
-    height: 80px;
+    height: 40px;
     width: 80%;
     margin-left: 10%;
     margin-right: 10%;
     background-color: white;
     border-radius: 10px;
+    font-family: monospace;
+    font-size:30px;
+    text-align: right;
+}
+.answer {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.calculation {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 
 .grid-container {
@@ -26,8 +38,15 @@
     margin-left: 10%;
     margin-right: 10%;
     border: 1 solid darkslategrey;
-    padding-top: 20px;
+    padding-top: 10px;
     display: grid;
     gap:10px;
+}
+
+button {
+    font-size:30px;
+    border-radius: 10px;
+    padding: 2px 0px;
+    display:block;
 }
 
