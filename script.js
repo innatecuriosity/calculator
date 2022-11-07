@@ -29,6 +29,11 @@ function choseOperation(a, b, sign) {
 
 function calculate(calculation) {
     return calculation;
+
+
+
+
+
 }
 //button event actions
 
@@ -96,6 +101,7 @@ const buttons= {
     "n9":{"row":[4], "col":[3],},
     "s(":{"row":[6], "col":[1],},
     "s)":{"row":[6], "col":[2],},
+    "n,":{"row":[1], "col":[1],},
 
     "wDel":{"row":[1], "col":[3],},
 

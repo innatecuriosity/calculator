@@ -1,29 +1,30 @@
 * {
     font-family: monospace;
     text-align: center;
+    vertical-align: middle;
 }
 
 .calculator {
+    display: flex;
+    flex-direction: column;
     margin:auto;
-    width: 400px;
-    height: 600px;
+    width: 320px;
+    height: fit-content;
+    padding: 40px;
     background-color: gray;
     border-radius: 40px;
 
 }
 
 .display {
-    position:relative;
-    top: 40px;
+    display:flex; 
     height: 60px;
-    width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 20px;
     font-family: monospace;
-    font-size:30px;
-    text-align: right;
+    font-size:40px;
+    justify-content: right;
+    padding: 0px 20px;
 }
 .answer {
     border-top-left-radius: 0px;
@@ -36,24 +37,19 @@
 }
 
 .grid-container {
-    position: relative;
-    top: 40px;
     margin-top: 10px;
-    width: 80%;
     height: 400px;
-    margin-left: 10%;
-    margin-right: 10%;
     border: 1 solid darkslategrey;
     padding-top: 10px;
     display: grid;
     gap:10px;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
 }
 
 .button {
     font-size:30px;
-    border-radius: 10px;
-    padding: 2px 0px;
-    
+    border-radius: 10px;    
     background-color: rgb(187, 187, 187);
 }
 
