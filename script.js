@@ -11,10 +11,7 @@ function divide(a, b) {return a/b;}
 
 function power(a, b) {return a**b}
 
-function clearEveryting() {
-    displayCalculation.textContent = "";
-    displayAnswer.textContent = "";
-}
+
 // chose an operation based on sign
 const operationsTable = {
     "+":add,
@@ -29,7 +26,11 @@ function choseOperation(a, b, sign) {
     return operationsTable[sign](a, b);
 }
 
-//action to add a symbol to the calculatin
+
+function calculate(calculation) {
+    return calculation;
+}
+//button event actions
 
 function onInput(event) {
     let button = event.target;
@@ -37,12 +38,34 @@ function onInput(event) {
     switch (button.id) {
         case ("wCE"):
             clearEveryting();
-            return true;
+            return "cleared";
+        case "wDel":
+            deleteLast();
+            return "deleted";
+        case "s=":
+            equals();
+            return "calculated";
     }
 
     displayCalculation.textContent += button.textContent;
     return button.textContent;
 }
+
+function deleteLast() {
+    displayCalculation.textContent = displayCalculation.textContent.slice(0, -1);
+
+}
+
+function clearEveryting() {
+    displayCalculation.textContent = "";
+    displayAnswer.textContent = "";
+}
+
+function equals() {
+    displayAnswer.textContent = calculate(displayCalculation.textContent);
+    }    
+
+
 
 // adding buttons
 const displayCalculation = document.querySelector(".display.calculation");
@@ -74,11 +97,13 @@ const buttons= {
     "s(":{"row":[6], "col":[1],},
     "s)":{"row":[6], "col":[2],},
 
+    "wDel":{"row":[1], "col":[3],},
+
     "wCE":{"row":[6], "col":[3,2],},
 }
 
 for (i in buttons) {
-    const key = document.createElement("button");
+    const key = document.createElement("div");
     key.textContent=i;
     key.setAttribute("id",i);
     key.classList.add("button");
@@ -95,6 +120,13 @@ for (i in buttons) {
         case "w":
             key.textContent = i.slice(1);
             key.fontSize="auto";
+            
+            switch (i) {
+                case "wDel":
+                    key.textContent = "\u2190";
+                    break; 
+
+            }
             break;
     }
 
