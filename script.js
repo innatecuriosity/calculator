@@ -29,6 +29,23 @@ function isParenthesis(a) {
     return false;
 }
 
+// chose an operation based on sign
+const operationsTable = {
+    "^":power,
+    "*":multiply,
+    "/":divide,
+    "-":subtract,
+    "+":add,
+
+
+}
+
+function choseOperation(a, b, sign) {
+    return operationsTable[sign](a, b);
+}
+
+
+
 // separates numbers and signs, returns an array ex. "2+4" => [2, "+", 4]
 
 function separate(input) {
@@ -116,19 +133,27 @@ function separateRecursion(input) {
     
 }
 
+//calculates array without parenthesis
+function calculateSimple(list) {
+    
+    //loops through operations
+    for (operation of Object.getOwnPropertyNames(operationsTable))
+        // resolves all calculations for given operation, replaces the three elements with the result   
+        while (list.includes(operation)) {
+            for (let i = 1; i<list.length; i++) {
+                if (list[i] == operation) {
+                    let a=1;
+                    let b=1;
+                    if (typeof(list[i-1])=="number") {a = list[i-1]}
+                    if (typeof(list[i+1])=="number") {b = list[i+1]} 
+                    result = operationsTable[operation](a, b);
+                    list.splice(i-1, 3, result);
+                    break;
+                }
+            }
+        }
 
-// chose an operation based on sign
-const operationsTable = {
-    "+":add,
-    "-":subtract,
-    "*":multiply,
-    "/":divide,
-    "^":power,
-}
-
-
-function choseOperation(a, b, sign) {
-    return operationsTable[sign](a, b);
+    return list;
 }
 
 
@@ -136,6 +161,7 @@ function calculate(input) {
     let elements = separateRecursion(input);
 
     console.log(elements)
+    elements = calculateSimple(elements);
     return elements;
 
 }
