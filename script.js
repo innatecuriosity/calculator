@@ -94,14 +94,12 @@ function separateRecursion(input) {
         // wraps up or starts another separateRecurson
         if (input[i]==")") {
             if (current != "") group.push(Number(current));
-            console.log("ended" + group + "length: " + i);
+            //console.log("ended" + group + "length: " + i);
             return [group, i+1];
 
         } else if (input[i] == "(") {
             if (current != "") {group.push(Number(current))}
-
-            console.log("starting new:" + input.slice(i+1));
-
+            //console.log("starting new:" + input.slice(i+1));
             next = separateRecursion(input.slice(i+1));
             group.push(next[0]);
             i += next[1];
@@ -135,35 +133,53 @@ function separateRecursion(input) {
 
 //calculates array without parenthesis
 function calculateSimple(list) {
-    
+    console.log(`Simple calculation: ${list}`)
     //loops through operations
     for (operation of Object.getOwnPropertyNames(operationsTable))
         // resolves all calculations for given operation, replaces the three elements with the result   
-        while (list.includes(operation)) {
-            for (let i = 1; i<list.length; i++) {
+        while (list.includes(operation) & list.length >=3) {
+            for (let i = 0; i<list.length; i++) {
                 if (list[i] == operation) {
                     let a=1;
                     let b=1;
+                    if ((operation == "+")||(operation =="-")) {a=0, b=0}
+
+                    for (duh of list) console.log(typeof(duh))
                     if (typeof(list[i-1])=="number") {a = list[i-1]}
                     if (typeof(list[i+1])=="number") {b = list[i+1]} 
                     result = operationsTable[operation](a, b);
+
+
                     list.splice(i-1, 3, result);
                     break;
                 }
             }
         }
 
-    return list;
+    console.log("result" + result)
+    return Number(list[0]);
 }
 
+//has to get a clean elements array
+function calculateRecursive(elements) {
+    for (element of elements) {
+        if (typeof(element)=="object") {
+            //console.log(`simplified ${element} to: `);
+            element = Number(calculateRecursive(element))
+        }
+    }
+
+    result = calculateSimple(elements);
+    console.log(typeof(result));
+    return Number(result);
+
+}
 
 function calculate(input) {
     let elements = separateRecursion(input);
 
-    console.log(elements)
-    elements = calculateSimple(elements);
-    return elements;
-
+    console.log(elements);
+    return calculateRecursive(elements)
 }
 
 
