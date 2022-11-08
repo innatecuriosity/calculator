@@ -11,6 +11,111 @@ function divide(a, b) {return a/b;}
 
 function power(a, b) {return a**b}
 
+function isNumber(a) {
+    if (["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."].includes(a) & a != "") {
+        return true;
+    }
+    return false;
+}
+function isOperator(a) {
+    if (Object.getOwnPropertyNames(operationsTable).includes(a)) {
+        return true;
+    }
+    return false;
+}
+function isParenthesis(a) {
+    if (a=="(") {return "start"}
+    if (a==")") {return "end"}
+    return false;
+}
+
+// separates numbers and signs, returns an array ex. "2+4" => [2, "+", 4]
+
+function separate(input) {
+    let group = []
+    let current = "";
+    for (let i=0; i<input.length; i++) {
+        // wraps up
+        if (input[i]==")") {
+            if (current != "") elements.push(Number(current));
+            return group;
+        }
+        // if its a number (or decimal) adds to current, and continues
+        if (isNumber(input[i])) {
+            current += input[i];
+            continue;
+        } 
+        // of its an operator or parenthesis, adds current to elements, then ads sign to elements
+        else if (isOperator(input[i])) {
+            if (current != "") group.push(Number(current));
+            group.push(input[i]);
+            current = "";
+            continue;
+        // pushes group, starts a new one
+        } else if (isParenthesis(input[i])) {
+            if (current != "") group.push(Number(current));
+            group.push(input[i]);
+            current = "";
+            continue;
+        }
+    }
+    // pushes what remains
+    if (current != "") group.push(Number(current));
+    console.log(group);
+
+    return group;
+}
+
+
+function separateRecursion(input) {
+
+    let group = [];
+    let current = "";
+    let next;
+
+    for (let i=0; i<input.length; i++) {
+        // wraps up or starts another separateRecurson
+        if (input[i]==")") {
+            if (current != "") group.push(Number(current));
+            console.log("ended" + group + "length: " + i);
+            return [group, i+1];
+
+        } else if (input[i] == "(") {
+            if (current != "") {group.push(Number(current))}
+
+            console.log("starting new:" + input.slice(i+1));
+
+            next = separateRecursion(input.slice(i+1));
+            group.push(next[0]);
+            i += next[1];
+            
+            continue;
+        }
+        
+
+        // if its a number (or decimal) adds to current, and continues
+        if (isNumber(input[i])) {
+            current += input[i];
+            continue;
+        } 
+        // of its an operator or parenthesis, adds current to elements, then ads sign to elements
+        else if (isOperator(input[i])) {
+            if (current != "") group.push(Number(current));
+            group.push(input[i]);
+            current = "";
+            continue;
+        // pushes group, starts a new one
+        } 
+    }
+    // pushes what remains
+
+    if (current != "") group.push(Number(current));
+    console.log(group);
+    //
+    return group;
+    
+}
+
 
 // chose an operation based on sign
 const operationsTable = {
@@ -27,14 +132,18 @@ function choseOperation(a, b, sign) {
 }
 
 
-function calculate(calculation) {
-    return calculation;
+function calculate(input) {
+    let elements = separateRecursion(input);
 
-
-
-
+    console.log(elements)
+    return elements;
 
 }
+
+
+
+
+
 //button event actions
 
 function onInput(event) {
@@ -101,7 +210,7 @@ const buttons= {
     "n9":{"row":[4], "col":[3],},
     "s(":{"row":[6], "col":[1],},
     "s)":{"row":[6], "col":[2],},
-    "n,":{"row":[1], "col":[1],},
+    "n.":{"row":[1], "col":[1],},
 
     "wDel":{"row":[1], "col":[3],},
 
